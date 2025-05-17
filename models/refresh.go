@@ -6,5 +6,4 @@ type RefreshToken struct {
 	TokenHash string `db:"token_hash"`
 	UserAgent string `db:"user_agent"`
 	IP        string `db:"ip"`
-	IsValid   bool   `db:"is_valid"`
 }
