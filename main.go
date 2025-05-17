@@ -29,6 +29,6 @@ func main() {
 		log.Error(err.Error())
 		os.Exit(1)
 	}
-	defer strg.Pool.Close()
+	defer strg.Close()
 	log.Info("DB created", slog.String("DB URL:", dbUrl))
 }
