@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log/slog"
 	"medodsTest/config"
+	"medodsTest/storage"
 	"os"
 )
 
@@ -13,6 +15,20 @@ func main() {
 	if err != nil {
 		log.Error(err.Error())
 	}
+	log.Info("Config loaded")
 
-	log.Info("Config loaded", slog.String("Address:", cfg.ServerConfig.Address))
+	dbUrl := fmt.Sprintf("postgres://%s:%s@%s:%d/%s",
+		cfg.DatabaseConfig.User,
+		cfg.DatabaseConfig.Password,
+		cfg.DatabaseConfig.Host,
+		cfg.DatabaseConfig.Port,
+		cfg.DatabaseConfig.Database)
+
+	strg, err := storage.NewStorage(dbUrl)
+	if err != nil {
+		log.Error(err.Error())
+		os.Exit(1)
+	}
+	defer strg.Pool.Close()
+	log.Info("DB created", slog.String("DB URL:", dbUrl))
 }

@@ -23,12 +23,12 @@ type Config struct {
 }
 
 func LoadConfig() (*Config, error) {
-	var config Config
+	var cfg Config
 
-	err := cleanenv.ReadConfig(".env", &config)
+	err := cleanenv.ReadConfig(".env", &cfg)
 	if err != nil {
 		return nil, fmt.Errorf("error reading .env: %v", err)
 	}
 
-	return &config, nil
+	return &cfg, nil
 }
